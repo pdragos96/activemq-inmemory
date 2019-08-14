@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Consumer {
 
-    @JmsListener(destination = "inmemory.queue")
+    @JmsListener(destination = "inmemory.topic")
     public void listener(String message) {
         System.out.println("First consumer received the following message: " + message);
     }

@@ -5,7 +5,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import javax.jms.Queue;
+import javax.jms.Topic;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.concurrent.Executors;
@@ -19,7 +19,7 @@ public class ProducerResource {
     private JmsTemplate jmsTemplate;
 
     @Autowired
-    private Queue queue;
+    private Topic topic;
 
     @PostConstruct
     public void publish() {
@@ -27,7 +27,7 @@ public class ProducerResource {
         exec.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                jmsTemplate.convertAndSend(queue, getTimeStamp());
+                jmsTemplate.convertAndSend(topic, getTimeStamp());
             }
         }, 0, 1, TimeUnit.SECONDS);
     }
